@@ -1,8 +1,4 @@
-﻿"use client";
-
-import { motion } from "framer-motion";
-
-type Plan = {
+﻿type Plan = {
   name: string;
   price: string;
   period: string;
@@ -41,54 +37,20 @@ const plans: Plan[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.9, y: 30 },
-  show: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.6 } },
-};
-
 export default function PricingSection() {
   return (
-    <section className="bg-white py-24 overflow-hidden">
+    <section className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6">
-        <motion.h3
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="font-serif mb-16 text-center text-5xl"
-        >
-          Membership Tiers
-        </motion.h3>
+        <h3 className="font-serif mb-16 text-center text-5xl">Membership Tiers</h3>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 items-center gap-8 md:grid-cols-3"
-        >
+        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-3">
           {plans.map((plan) => {
             const baseClasses = plan.featured
-              ? "relative scale-105 rounded-2xl border-2 border-[#d4af35] bg-[#0a0a0a] p-12 text-center text-white shadow-2xl z-10"
+              ? "relative scale-105 rounded-2xl border-2 border-[#d4af35] bg-[#0a0a0a] p-12 text-center text-white shadow-2xl"
               : "rounded-2xl border-2 border-neutral-100 bg-white p-10 text-center";
 
             return (
-              <motion.div
-                variants={cardVariants}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className={baseClasses}
-                key={plan.name}
-              >
+              <div className={baseClasses} key={plan.name}>
                 {plan.featured ? (
                   <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-[#d4af35] px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                     Most Popular
@@ -112,18 +74,19 @@ export default function PricingSection() {
                 </ul>
 
                 <a
-                  className={`block w-full rounded py-3 font-bold uppercase tracking-widest transition ${plan.featured
-                    ? "bg-[#d4af35] hover:bg-white hover:text-[#d4af35]"
-                    : "border-2 border-black hover:bg-black hover:text-white"
-                    }`}
+                  className={`block w-full rounded py-3 font-bold uppercase tracking-widest transition ${
+                    plan.featured
+                      ? "bg-[#d4af35] hover:bg-white hover:text-[#d4af35]"
+                      : "border-2 border-black hover:bg-black hover:text-white"
+                  }`}
                   href="#"
                 >
                   {plan.cta}
                 </a>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

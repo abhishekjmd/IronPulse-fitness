@@ -1,7 +1,4 @@
-﻿"use client";
-
-import Image from "next/image";
-import { motion } from "framer-motion";
+﻿import Image from "next/image";
 
 type Transformation = {
   name: string;
@@ -52,70 +49,25 @@ const transformations: Transformation[] = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.8 } },
-};
-
 export default function TransformationsSection() {
   return (
-    <section className="bg-[#f8f7f6] py-24 overflow-hidden">
+    <section className="bg-[#f8f7f6] py-24">
       <div className="mx-auto max-w-7xl px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#d4af35]">Social Proof</h2>
-          <h3 className="font-serif mb-16 text-5xl">Real People. Real Results.</h3>
-        </motion.div>
+        <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#d4af35]">Social Proof</h2>
+        <h3 className="font-serif mb-16 text-5xl">Real People. Real Results.</h3>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 gap-8 md:grid-cols-3"
-        >
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {transformations.map((item) => (
-            <motion.div
-              variants={cardVariants}
-              whileHover={{ y: -10 }}
-              className="overflow-hidden rounded-2xl border border-[#d4af35]/10 bg-white shadow-lg transition-shadow duration-300 hover:shadow-2xl"
-              key={item.name}
-            >
+            <div className="overflow-hidden rounded-2xl border border-[#d4af35]/10 bg-white shadow-lg" key={item.name}>
               <div className="flex">
-                <div className="relative h-64 w-1/2 overflow-hidden group">
-                  <Image
-                    alt={item.beforeAlt}
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    fill
-                    sizes="(min-width: 768px) 16vw, 50vw"
-                    src={item.beforeImage}
-                  />
+                <div className="relative h-64 w-1/2">
+                  <Image alt={item.beforeAlt} className="object-cover" fill sizes="(min-width: 768px) 16vw, 50vw" src={item.beforeImage} />
                   <span className="absolute bottom-2 left-2 rounded bg-black/50 px-2 py-1 text-[10px] text-white">
                     BEFORE
                   </span>
                 </div>
-                <div className="relative h-64 w-1/2 overflow-hidden group">
-                  <Image
-                    alt={item.afterAlt}
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    fill
-                    sizes="(min-width: 768px) 16vw, 50vw"
-                    src={item.afterImage}
-                  />
+                <div className="relative h-64 w-1/2">
+                  <Image alt={item.afterAlt} className="object-cover" fill sizes="(min-width: 768px) 16vw, 50vw" src={item.afterImage} />
                   <span className="absolute bottom-2 right-2 rounded bg-[#d4af35] px-2 py-1 text-[10px] text-white">
                     AFTER
                   </span>
@@ -129,9 +81,9 @@ export default function TransformationsSection() {
                 </div>
                 <p className="font-light italic text-neutral-600">{item.quote}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

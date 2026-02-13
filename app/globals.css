@@ -3,6 +3,14 @@
 :root {
   --primary: #d4af35;
   --background-dark: #201d12;
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --motion-slow: 350ms;
+  --motion-page: 400ms;
+  --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: ease-in;
+  --ease-out: ease-out;
+  --ease-in-out: ease-in-out;
 }
 
 body {
@@ -36,7 +44,7 @@ body {
 }
 
 .flip-card-inner {
-  transition: transform 0.6s;
+  transition: transform var(--motion-slow) var(--ease-standard);
   transform-style: preserve-3d;
 }
 
@@ -62,4 +70,160 @@ body {
   height: 450px;
   border: 0;
   filter: grayscale(1) invert(0) contrast(1.2);
+}
+
+.page-transition {
+  will-change: transform, opacity;
+}
+
+@layer utilities {
+  .motion-fast {
+    transition-duration: var(--motion-fast);
+  }
+
+  .motion-base {
+    transition-duration: var(--motion-base);
+  }
+
+  .motion-slow {
+    transition-duration: var(--motion-slow);
+  }
+
+  .motion-page {
+    transition-duration: var(--motion-page);
+  }
+
+  .ease-standard {
+    transition-timing-function: var(--ease-standard);
+  }
+
+  .fade-in {
+    animation: fade-in var(--motion-base) var(--ease-standard);
+  }
+
+  .fade-out {
+    animation: fade-out var(--motion-fast) var(--ease-in-out);
+  }
+
+  .slide-up {
+    animation: slide-up var(--motion-base) var(--ease-standard);
+  }
+
+  .slide-down {
+    animation: slide-down var(--motion-base) var(--ease-standard);
+  }
+
+  .scale-up {
+    animation: scale-up var(--motion-base) var(--ease-standard);
+  }
+
+  .bounce-subtle {
+    animation: bounce-subtle var(--motion-slow) var(--ease-standard);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes scale-up {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-subtle {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -2px, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+button {
+  transition-property: transform, opacity;
+  transition-duration: var(--motion-base);
+  transition-timing-function: var(--ease-standard);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button:hover:not(:disabled) {
+    transform: scale(1.02);
+  }
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+button:disabled {
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description: "Experience elite personal training and world-class facilities.",
 };
 
+import Navbar from "@/features/navigation/Navbar";
+import Footer from "@/features/navigation/Footer";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,7 +34,9 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} ${playfair.variable} font-sans`}>
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

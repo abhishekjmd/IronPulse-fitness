@@ -1,7 +1,4 @@
-﻿"use client";
-
-import Image from "next/image";
-import { motion } from "framer-motion";
+﻿import Image from "next/image";
 
 const features = [
   {
@@ -49,79 +46,39 @@ const images = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const featureVariants = {
-  hidden: { opacity: 0, x: -30 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6 } },
-};
-
-const imageVariants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
-};
-
 export default function WhyChooseSection() {
   return (
-    <section className="bg-white py-24 overflow-hidden">
+    <section className="bg-white py-24">
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-2">
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
-        >
-          <motion.h2 variants={featureVariants} className="font-serif mb-8 text-5xl">
+        <div>
+          <h2 className="font-serif mb-8 text-5xl">
             Why Choose
             <br />
             IronPulse Fitness?
-          </motion.h2>
+          </h2>
 
           <div className="space-y-6">
             {features.map((feature) => (
-              <motion.div
-                variants={featureVariants}
-                className="flex items-start space-x-4"
-                key={feature.title}
-              >
-                <div className="rounded bg-[#d4af35]/20 p-2 shrink-0">
+              <div className="flex items-start space-x-4" key={feature.title}>
+                <div className="rounded bg-[#d4af35]/20 p-2">
                   <span className="material-icons text-[#d4af35]">{feature.icon}</span>
                 </div>
                 <div>
                   <h4 className="text-lg font-bold">{feature.title}</h4>
                   <p className="text-neutral-600">{feature.text}</p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
-          className="grid grid-cols-2 gap-4"
-        >
+        <div className="grid grid-cols-2 gap-4">
           {images.map((image) => (
-            <motion.div
-              variants={imageVariants}
-              whileHover={{ scale: 1.05 }}
-              className={`relative h-64 w-full overflow-hidden rounded-xl ${image.extraClass}`}
-              key={image.src}
-            >
+            <div className={`relative h-64 w-full overflow-hidden rounded-xl ${image.extraClass}`} key={image.src}>
               <Image alt={image.alt} className="object-cover" fill sizes="(min-width: 768px) 25vw, 50vw" src={image.src} />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

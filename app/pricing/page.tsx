@@ -3,10 +3,8 @@ import PricingAddOnsSection from "../components/pricing/PricingAddOnsSection";
 import PricingComparisonSection from "../components/pricing/PricingComparisonSection";
 import PricingCtaSection from "../components/pricing/PricingCtaSection";
 import PricingFaqSection from "../components/pricing/PricingFaqSection";
-import PricingFooter from "../components/pricing/PricingFooter";
 import PricingGuaranteeSection from "../components/pricing/PricingGuaranteeSection";
 import PricingHeroSection from "../components/pricing/PricingHeroSection";
-import PricingNavbar from "../components/pricing/PricingNavbar";
 import PricingPlansSection from "../components/pricing/PricingPlansSection";
 
 export const metadata: Metadata = {
@@ -17,7 +15,6 @@ export const metadata: Metadata = {
 export default function PricingPage() {
   return (
     <main className="bg-[#f8f7f6] text-[#1a1814]">
-      <PricingNavbar />
       <PricingHeroSection />
       <PricingPlansSection />
       <PricingComparisonSection />
@@ -25,7 +22,6 @@ export default function PricingPage() {
       <PricingFaqSection />
       <PricingGuaranteeSection />
       <PricingCtaSection />
-      <PricingFooter />
     </main>
   );
 }
