@@ -1,4 +1,8 @@
-﻿import Image from "next/image";
+﻿"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
 
 const images = [
   {
@@ -27,20 +31,53 @@ export default function StoryFacilitySection() {
   return (
     <section className="bg-[#221e10] py-24">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.35, ease: motionEasings.standard }}
+          className="mb-12"
+        >
           <h2 className="font-serif mb-2 text-4xl text-white">Facility Tour</h2>
           <p className="text-xs font-bold uppercase tracking-widest text-[#eec02b]">Uncompromising Standard of Excellence</p>
-        </div>
+        </motion.div>
 
-        <div className="grid auto-rows-[250px] grid-cols-1 gap-4 md:grid-cols-4">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+          className="grid auto-rows-[250px] grid-cols-1 gap-4 md:grid-cols-4"
+        >
           {images.map((image) => (
-            <div className={`relative overflow-hidden rounded-xl ${image.className}`} key={image.title}>
-              <Image alt={image.title} className="h-full w-full object-cover transition-transform duration-700 hover:scale-105" fill sizes="(min-width: 768px) 25vw, 100vw" src={image.src} />
+            <motion.div
+              key={image.title}
+              variants={{
+                hidden: { opacity: 0, scale: 0.95 },
+                show: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: motionEasings.standard } },
+              }}
+              className={`relative overflow-hidden rounded-xl ${image.className}`}
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3, ease: motionEasings.standard }}
+                className="h-full w-full"
+              >
+                <Image alt={image.title} className="h-full w-full object-cover" fill sizes="(min-width: 768px) 25vw, 100vw" src={image.src} />
+              </motion.div>
               <div className="absolute bottom-4 left-4 rounded border-l-2 border-[#eec02b] bg-[#221e10]/80 px-4 py-2 text-sm text-white">{image.title}</div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+

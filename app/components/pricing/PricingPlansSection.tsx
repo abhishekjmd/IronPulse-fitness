@@ -1,4 +1,9 @@
-﻿const plans = [
+﻿"use client";
+
+import { motion } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
+
+const plans = [
   {
     name: "General",
     price: "INR 1,499",
@@ -45,15 +50,33 @@ export default function PricingPlansSection() {
   return (
     <section className="bg-[#f8f7f6] py-24">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="grid grid-cols-1 items-center gap-8 md:grid-cols-3">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
+          className="grid grid-cols-1 items-center gap-8 md:grid-cols-3"
+        >
           {plans.map((plan) => (
-            <div
+            <motion.div
+              key={plan.name}
+              variants={{
+                hidden: { opacity: 0, y: 24 },
+                show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: motionEasings.standard } },
+              }}
+              whileHover={{ y: -6, transition: { duration: 0.2, ease: motionEasings.standard } }}
               className={
                 plan.featured
-                  ? "relative z-10 flex h-[600px] scale-105 flex-col rounded-xl border-2 border-[#e0b629] bg-[#1a1814] p-10 text-white shadow-2xl"
-                  : "flex h-full flex-col rounded-xl border border-neutral-100 bg-white p-10 shadow-sm"
+                  ? "relative z-10 flex h-[600px] scale-105 flex-col rounded-xl border-2 border-[#e0b629] bg-[#1a1814] p-10 text-white shadow-2xl transition-shadow duration-300 hover:shadow-[0_0_40px_rgba(224,182,41,0.2)]"
+                  : "flex h-full flex-col rounded-xl border border-neutral-100 bg-white p-10 shadow-sm transition-shadow duration-300 hover:shadow-lg"
               }
-              key={plan.name}
             >
               {plan.featured ? (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#e0b629] px-4 py-1 text-[10px] font-black uppercase tracking-widest text-[#1a1814]">
@@ -70,15 +93,13 @@ export default function PricingPlansSection() {
               <ul className="mb-10 flex-grow space-y-4">
                 {plan.items.map((item) => (
                   <li
-                    className={`flex items-center text-sm ${
-                      item.included ? (plan.featured ? "text-neutral-300" : "text-neutral-600") : "text-neutral-400 line-through"
-                    }`}
+                    className={`flex items-center text-sm ${item.included ? (plan.featured ? "text-neutral-300" : "text-neutral-600") : "text-neutral-400 line-through"
+                      }`}
                     key={item.label}
                   >
                     <span
-                      className={`material-icons mr-3 text-sm ${
-                        item.included ? "text-[#e0b629]" : "text-neutral-300"
-                      }`}
+                      className={`material-icons mr-3 text-sm ${item.included ? "text-[#e0b629]" : "text-neutral-300"
+                        }`}
                     >
                       {item.included ? (plan.featured ? "star" : "check") : "close"}
                     </span>
@@ -87,19 +108,23 @@ export default function PricingPlansSection() {
                 ))}
               </ul>
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.2, ease: motionEasings.standard }}
                 className={
                   plan.featured
-                    ? "w-full rounded bg-[#e0b629] py-4 text-xs font-black uppercase tracking-widest text-[#1a1814] transition-transform hover:scale-[1.02]"
+                    ? "w-full rounded bg-[#e0b629] py-4 text-xs font-black uppercase tracking-widest text-[#1a1814]"
                     : "w-full rounded border-2 border-[#e0b629] py-4 text-xs font-bold uppercase tracking-widest text-[#e0b629] transition-all hover:bg-[#e0b629] hover:text-white"
                 }
               >
                 {plan.cta}
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+

@@ -1,6 +1,8 @@
 ﻿"use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
 
 const faqs = [
   {
@@ -23,24 +25,71 @@ export default function PricingFaqSection() {
   return (
     <section className="border-y border-neutral-100 bg-white py-24">
       <div className="mx-auto max-w-3xl px-6">
-        <h2 className="font-serif mb-12 text-center text-3xl font-bold">Frequently Asked Questions</h2>
-        <div className="space-y-6">
+        <motion.h2
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.35, ease: motionEasings.standard }}
+          className="font-serif mb-12 text-center text-3xl font-bold"
+        >
+          Frequently Asked Questions
+        </motion.h2>
+
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
+          className="space-y-6"
+        >
           {faqs.map((item, idx) => {
             const isOpen = open === idx;
             return (
-              <div className="border-b border-neutral-100 pb-6" key={item.q}>
+              <motion.div
+                key={item.q}
+                variants={{
+                  hidden: { opacity: 0, y: 16 },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: motionEasings.standard } },
+                }}
+                className="border-b border-neutral-100 pb-6"
+              >
                 <button className="group flex w-full items-center justify-between text-left" onClick={() => setOpen(isOpen ? -1 : idx)} type="button">
                   <span className="font-serif text-lg font-bold">{item.q}</span>
-                  <span className={`material-icons text-[#e0b629] transition-transform ${isOpen ? "rotate-180" : "group-hover:rotate-180"}`}>
+                  <motion.span
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.2, ease: motionEasings.standard }}
+                    className="material-icons text-[#e0b629]"
+                  >
                     expand_more
-                  </span>
+                  </motion.span>
                 </button>
-                {isOpen ? <div className="mt-4 text-sm font-light leading-relaxed text-neutral-500">{item.a}</div> : null}
-              </div>
+
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.25, ease: motionEasings.standard }}
+                      className="overflow-hidden"
+                    >
+                      <div className="mt-4 text-sm font-light leading-relaxed text-neutral-500">{item.a}</div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+

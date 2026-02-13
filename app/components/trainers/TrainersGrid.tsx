@@ -1,4 +1,8 @@
-﻿import Image from "next/image";
+﻿"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
 
 type Trainer = {
   name: string;
@@ -23,7 +27,7 @@ const trainers: Trainer[] = [
     name: "Neha Kapoor",
     role: "Yoga & Mindfulness",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB_eK8YysxI_vcSHo4_a7SBOzNN5QVtuohPgGmU-XThhScrBL5JqbBZvupHMJZCkBY3AQ8wMWDsgJk8nsYuItlfmIMPABjzZInpCxVIU0QVDjS3M_YQGF8-PuacSRHK4FZE3C5fwdBn8D0LEd3DYBu1jrQsU7juDQQA7M2weWQoucYbU7NmxlncxBOne280UXpUACTEkYV6cpHCk6aK3XibdNWXlqW1VOYXiyHHNcys-CdII25n589sbdf2CzVYQPr02a0gQoqmOqk",
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuB_eK8YysxI_vcSHo4_a7SBOzNN5QVtuohPgGmU-XThhScrBL5JqbBZvupHMJsD4O-neuuS9Gv_U6j6BbYprtLoqAOv-W9nteeyeeJ7mH1CpcjR9UuxvpMEOwiLmajkkD2exQ0XCgJlOVgk0dXeS5hgXywe7F0qqAe_qrshxydwdVYc6rXEBGnUZiik1yaHeq-UO36ocjKhYd7Cfdrp2Y3l0SSmKakPDea3inj0lVE4BN-OHBzH4FTq54bMBAsZrbIi8PQW7rO0MrAwtYbd9OPdQ",
     icon: "self_improvement",
     bio: "Specializing in Vinyasa and Hatha Yoga to balance physical vigor with mental clarity.",
     certs: ["RYT 500 Hours", "Meditation Guide"],
@@ -69,9 +73,30 @@ const trainers: Trainer[] = [
 export default function TrainersGrid() {
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
-      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+          hidden: {},
+          show: {
+            transition: {
+              staggerChildren: 0.1,
+            },
+          },
+        }}
+        className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3"
+      >
         {trainers.map((trainer) => (
-          <div className="flip-card perspective-1000 group h-[500px] w-full" key={trainer.name}>
+          <motion.div
+            key={trainer.name}
+            variants={{
+              hidden: { opacity: 0, y: 24 },
+              show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: motionEasings.standard } },
+            }}
+            whileHover={{ y: -6, transition: { duration: 0.2, ease: motionEasings.standard } }}
+            className="flip-card perspective-1000 group h-[500px] w-full"
+          >
             <div className="flip-card-inner relative h-full w-full text-center">
               <div className="flip-card-front absolute h-full w-full overflow-hidden rounded-xl border-b-4 border-[#edbc1d] bg-white shadow-xl">
                 <div className="relative h-[80%] w-full">
@@ -101,9 +126,9 @@ export default function TrainersGrid() {
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }
