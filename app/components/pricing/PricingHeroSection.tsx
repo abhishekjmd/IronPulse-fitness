@@ -1,6 +1,6 @@
 ﻿export default function PricingHeroSection() {
   return (
-    <section className="flex h-[50vh] flex-col items-center justify-center border-b border-neutral-100 bg-white px-6">
+    <section className="flex h-[55vh] flex-col items-center justify-center border-b border-neutral-100 bg-white px-6 pt-10">
       <nav className="mb-6 flex items-center text-xs uppercase tracking-[0.2em] text-neutral-400">
         <a className="hover:text-[#e0b629]" href="#">Home</a>
         <span className="mx-3 text-[10px]">/</span>

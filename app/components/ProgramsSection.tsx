@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { motion } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
 
 const programs = [
   { icon: "fitness_center", title: "Weight Training" },
@@ -15,14 +16,14 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.06,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: motionEasings.standard } },
 };
 
 export default function ProgramsSection() {
@@ -33,7 +34,7 @@ export default function ProgramsSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.35, ease: motionEasings.standard }}
         >
           <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-[#d4af35]">Our Specializations</h2>
           <h3 className="font-serif mb-16 text-5xl">Transform Your Body</h3>
@@ -48,17 +49,22 @@ export default function ProgramsSection() {
         >
           {programs.map((program) => (
             <motion.div
-              variants={itemVariants}
-              whileHover={{ y: -10 }}
-              className="group rounded-xl border-b-4 border-transparent bg-white p-8 shadow-sm transition-all duration-300 hover:border-[#d4af35] hover:shadow-xl"
               key={program.title}
+              variants={itemVariants}
+              whileHover={{ y: -6, transition: { duration: 0.2, ease: motionEasings.standard } }}
+              className="group rounded-xl border-b-4 border-transparent bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-xl"
             >
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#d4af35]/10 transition-colors duration-300 group-hover:bg-[#d4af35]">
-                <span className="material-icons text-[#d4af35] transition-colors duration-300 group-hover:text-white">{program.icon}</span>
-              </div>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#d4af35]/10 transition-colors duration-300 group-hover:bg-[#d4af35]"
+              >
+                <span className="material-icons text-[#d4af35] transition-colors duration-300 group-hover:text-white">
+                  {program.icon}
+                </span>
+              </motion.div>
               <h4 className="font-serif mb-3 text-xl">{program.title}</h4>
               <a
-                className="flex items-center justify-center text-xs font-bold uppercase tracking-widest text-[#d4af35]"
+                className="flex items-center justify-center text-xs font-bold uppercase tracking-widest text-[#d4af35] transition-colors duration-200"
                 href="#"
               >
                 Learn More <span className="material-icons ml-1 text-xs">arrow_forward</span>

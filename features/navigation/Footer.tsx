@@ -1,10 +1,15 @@
-﻿import Link from "next/link";
-import { Dumbbell } from "lucide-react";
+﻿"use client";
+
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Dumbbell, Facebook, Instagram, Youtube, Twitter } from "lucide-react";
+import { motionEasings } from "@/lib/motion/easings";
+
 const footerLinks = [
   {
     title: "Company",
     links: [
-      { name: "Our Story", href: "/story" },
+      { name: "About Us", href: "/story" },
       { name: "Programs", href: "/programs" },
       { name: "Pricing", href: "/pricing" },
       { name: "Trainers", href: "/trainers" },
@@ -21,9 +26,22 @@ const footerLinks = [
   },
 ];
 
+const socialIcons = [
+  { name: "Facebook", icon: Facebook },
+  { name: "Instagram", icon: Instagram },
+  { name: "Youtube", icon: Youtube },
+  { name: "Twitter", icon: Twitter },
+];
+
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-[#201d12] py-20 text-white">
+    <motion.footer
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.45, ease: motionEasings.standard }}
+      className="border-t border-white/5 bg-[#0a0a0a] py-20 text-white"
+    >
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
           {/* Brand */}
@@ -50,7 +68,7 @@ export default function Footer() {
                   <li key={link.name}>
                     <Link
                       href={link.href}
-                      className="text-sm text-neutral-400 transition hover:text-white"
+                      className="text-sm text-neutral-400 transition-colors duration-200 hover:text-white"
                     >
                       {link.name}
                     </Link>
@@ -67,20 +85,24 @@ export default function Footer() {
           </p>
 
           <div className="mt-6 flex space-x-6 md:mt-0">
-            {["facebook", "instagram", "youtube", "twitter"].map((social) => (
-              <a
-                key={social}
-                href="#"
-                className="text-neutral-500 transition hover:text-[#d4af35]"
-                aria-label={social}
-              >
-                {/* Simplified social icons using placeholders/labels for now */}
-                <span className="text-xs uppercase font-bold">{social}</span>
-              </a>
-            ))}
+            {socialIcons.map((social) => {
+              const Icon = social.icon;
+              return (
+                <motion.a
+                  key={social.name}
+                  href="#"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.15, ease: motionEasings.standard }}
+                  className="text-neutral-500 transition-colors duration-200 hover:text-[#d4af35]"
+                  aria-label={social.name}
+                >
+                  <Icon className="h-5 w-5" />
+                </motion.a>
+              );
+            })}
           </div>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

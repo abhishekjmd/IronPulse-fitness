@@ -1,14 +1,17 @@
 ﻿"use client";
 
 import { motion } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
 
 export default function HeroSection() {
+  const headline = ["Train Strong.", "Live Better."];
+
   return (
     <section className="relative flex h-screen items-center justify-center overflow-hidden">
       <motion.div
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        initial={{ opacity: 0, scale: 1.02 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.4, ease: motionEasings.standard }}
         className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage:
@@ -18,49 +21,69 @@ export default function HeroSection() {
       <div className="hero-gradient absolute inset-0" />
 
       <div className="relative z-10 max-w-4xl px-4 text-center text-white">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="font-serif mb-6 text-6xl leading-tight md:text-8xl"
-        >
-          Train Strong.
-          <br />
-          Live Better.
-        </motion.h1>
+        <h1 className="font-serif mb-6 text-6xl leading-tight md:text-8xl flex flex-col items-center">
+          {headline.map((line, i) => (
+            <span key={i} className="overflow-hidden">
+              <motion.span
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.35,
+                  delay: i * 0.06,
+                  ease: motionEasings.standard
+                }}
+                className="inline-block"
+              >
+                {line}
+              </motion.span>
+            </span>
+          ))}
+        </h1>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3, delay: 0.25, ease: motionEasings.standard }}
           className="mb-10 text-xl font-light tracking-wide text-white/90 md:text-2xl"
         >
           Experience elite personal training and world-class facilities designed for your ultimate transformation.
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-          className="flex flex-col items-center justify-center gap-4 md:flex-row"
-        >
-          <a
-            className="group relative overflow-hidden rounded-full bg-[#d4af35] px-10 py-4 font-bold uppercase tracking-widest text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#d4af35]/20 active:scale-95"
-            href="#"
+        <div className="flex flex-col items-center justify-center gap-4 md:flex-row">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.35, ease: motionEasings.standard }}
           >
-            <span className="relative z-10">Book Free Trial</span>
-            <div className="absolute inset-0 -translate-x-full bg-white transition-transform duration-300 group-hover:translate-x-0" />
-            <style jsx>{`
-              a:hover span { color: #d4af35; }
-            `}</style>
-          </a>
-          <a
-            className="rounded-full border-2 border-white px-10 py-4 font-bold uppercase tracking-widest text-white transition-all duration-300 hover:bg-white hover:text-black active:scale-95"
-            href="#"
+            <motion.a
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="group relative block overflow-hidden rounded-full bg-[#d4af35] px-10 py-4 font-bold uppercase tracking-widest text-white transition-all duration-300 hover:shadow-xl hover:shadow-[#d4af35]/20 focus:outline-none focus:ring-2 focus:ring-[#d4af35] focus:ring-offset-2"
+              href="#"
+            >
+              <span className="relative z-10">Book Free Trial</span>
+              <div className="absolute inset-0 -translate-x-full bg-white transition-transform duration-300 group-hover:translate-x-0" />
+              <style jsx>{`
+                a:hover span { color: #d4af35; }
+              `}</style>
+            </motion.a>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.43, ease: motionEasings.standard }}
           >
-            WhatsApp Now
-          </a>
-        </motion.div>
+            <motion.a
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="block rounded-full border-2 border-white px-10 py-4 font-bold uppercase tracking-widest text-white transition-all duration-300 hover:bg-white hover:text-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2"
+              href="#"
+            >
+              WhatsApp Now
+            </motion.a>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { motion } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
 
 type Plan = {
   name: string;
@@ -46,14 +47,9 @@ const containerVariants = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.1,
     },
   },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, scale: 0.9, y: 30 },
-  show: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 export default function PricingSection() {
@@ -61,10 +57,10 @@ export default function PricingSection() {
     <section className="bg-white py-24 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6">
         <motion.h3
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.35, ease: motionEasings.standard }}
           className="font-serif mb-16 text-center text-5xl"
         >
           Membership Tiers
@@ -79,21 +75,32 @@ export default function PricingSection() {
         >
           {plans.map((plan) => {
             const baseClasses = plan.featured
-              ? "relative scale-105 rounded-2xl border-2 border-[#d4af35] bg-[#0a0a0a] p-12 text-center text-white shadow-2xl z-10"
+              ? "relative rounded-2xl border-2 border-[#d4af35] bg-[#0a0a0a] p-12 text-center text-white z-10"
               : "rounded-2xl border-2 border-neutral-100 bg-white p-10 text-center";
 
             return (
               <motion.div
-                variants={cardVariants}
-                whileHover={{ y: -5, transition: { duration: 0.2 } }}
-                className={baseClasses}
                 key={plan.name}
+                variants={{
+                  hidden: { opacity: 0, y: 24, scale: plan.featured ? 0.98 : 1 },
+                  show: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: { duration: 0.35, ease: motionEasings.standard }
+                  },
+                }}
+                whileHover={{ y: -6, transition: { duration: 0.2, ease: motionEasings.standard } }}
+                className={baseClasses}
               >
-                {plan.featured ? (
-                  <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-[#d4af35] px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-                    Most Popular
-                  </span>
-                ) : null}
+                {plan.featured && (
+                  <>
+                    <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded bg-[#d4af35] px-4 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                      Most Popular
+                    </span>
+                    <div className="absolute inset-0 rounded-2xl shadow-[0_0_30px_rgba(212,175,53,0.15)] pointer-events-none" />
+                  </>
+                )}
 
                 <h4 className="font-serif mb-2 text-2xl">{plan.name}</h4>
 
@@ -111,15 +118,21 @@ export default function PricingSection() {
                   ))}
                 </ul>
 
-                <a
-                  className={`block w-full rounded py-3 font-bold uppercase tracking-widest transition ${plan.featured
-                    ? "bg-[#d4af35] hover:bg-white hover:text-[#d4af35]"
-                    : "border-2 border-black hover:bg-black hover:text-white"
-                    }`}
-                  href="#"
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2, ease: motionEasings.standard }}
                 >
-                  {plan.cta}
-                </a>
+                  <a
+                    className={`block w-full rounded py-3 font-bold uppercase tracking-widest transition-colors duration-200 ${plan.featured
+                        ? "bg-[#d4af35] text-white hover:bg-white hover:text-[#d4af35]"
+                        : "border-2 border-black hover:bg-black hover:text-white"
+                      }`}
+                    href="#"
+                  >
+                    {plan.cta}
+                  </a>
+                </motion.div>
               </motion.div>
             );
           })}

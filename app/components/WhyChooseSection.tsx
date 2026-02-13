@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { motionEasings } from "@/lib/motion/easings";
 
 const features = [
   {
@@ -49,26 +50,6 @@ const images = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.15,
-    },
-  },
-};
-
-const featureVariants = {
-  hidden: { opacity: 0, x: -30 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6 } },
-};
-
-const imageVariants = {
-  hidden: { opacity: 0, scale: 0.9 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
-};
-
 export default function WhyChooseSection() {
   return (
     <section className="bg-white py-24 overflow-hidden">
@@ -77,9 +58,22 @@ export default function WhyChooseSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.08,
+              },
+            },
+          }}
         >
-          <motion.h2 variants={featureVariants} className="font-serif mb-8 text-5xl">
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, x: -32 },
+              show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: motionEasings.standard } }
+            }}
+            className="font-serif mb-8 text-5xl"
+          >
             Why Choose
             <br />
             IronPulse Fitness?
@@ -88,7 +82,10 @@ export default function WhyChooseSection() {
           <div className="space-y-6">
             {features.map((feature) => (
               <motion.div
-                variants={featureVariants}
+                variants={{
+                  hidden: { opacity: 0, x: -32 },
+                  show: { opacity: 1, x: 0, transition: { duration: 0.35, ease: motionEasings.standard } }
+                }}
                 className="flex items-start space-x-4"
                 key={feature.title}
               >
@@ -108,14 +105,23 @@ export default function WhyChooseSection() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          variants={containerVariants}
+          variants={{
+            show: {
+              transition: {
+                staggerChildren: 0.1,
+              },
+            },
+          }}
           className="grid grid-cols-2 gap-4"
         >
           {images.map((image) => (
             <motion.div
-              variants={imageVariants}
-              whileHover={{ scale: 1.05 }}
-              className={`relative h-64 w-full overflow-hidden rounded-xl ${image.extraClass}`}
+              variants={{
+                hidden: { opacity: 0, scale: 1.05 },
+                show: { opacity: 1, scale: 1, transition: { duration: 0.35, ease: motionEasings.standard } }
+              }}
+              whileHover={{ scale: 1.03, transition: { duration: 0.2, ease: motionEasings.standard } }}
+              className={`relative h-64 w-full overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 ${image.extraClass}`}
               key={image.src}
             >
               <Image alt={image.alt} className="object-cover" fill sizes="(min-width: 768px) 25vw, 50vw" src={image.src} />
